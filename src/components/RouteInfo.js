@@ -43,7 +43,7 @@ function deg2rad(deg) {
 }
 
 function estimateDuration(distance) {
-  const averageSpeed = 50; // km/h
+  const averageSpeed = 30; // km/h, giảm tốc độ trung bình xuống để ước tính chính xác hơn
   return (distance / averageSpeed) * 60; // minutes
 }
 
