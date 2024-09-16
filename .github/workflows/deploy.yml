@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -34,7 +34,9 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './build'
-
+      - name: Check Build Directory
+        run: ls -la ./build
+        
   deploy-production:
     environment:
       name: github-pages
@@ -52,10 +54,12 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/staging'
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Deploy to GitHub Pages (Staging)
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./build  # Đảm bảo rằng thư mục build đã được tạo ra
           publish_branch: gh-pages
           destination_dir: staging
