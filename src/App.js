@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>App tính toán đường đi (No API)</h1>
+        <h1>App tính toán đường đi (No API) v1.0</h1>
       </header>
       <main className="App-main">
         <div className="left-panel">
