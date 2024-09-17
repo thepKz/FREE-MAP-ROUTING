@@ -81,6 +81,13 @@ jobs:
           echo "$artifacts"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download and check artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: ./public
+      - name: List files in public folder
+        run: ls -R ./public
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
