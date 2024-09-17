@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^2.19.3",
-    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
@@ -45,8 +44,10 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
+    "@testing-library/jest-dom": "^6.5.0",
     "babel-jest": "^29.7.0",
-    "gh-pages": "^6.1.1"
+    "gh-pages": "^6.1.1",
+    "identity-obj-proxy": "^3.0.0"
   },
   "homepage": "https://thepKz.github.io/FREE-MAP-ROUTING",
   "jest": {
@@ -58,9 +59,6 @@
     ],
     "moduleNameMapper": {
       "\\.(css|less|scss|sass)$": "identity-obj-proxy"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.js"
-    ]
+    }
   }
 }
