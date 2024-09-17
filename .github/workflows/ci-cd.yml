@@ -38,6 +38,7 @@ jobs:
     - name: Check Build Directory
       run: ls -la ./build
     - name: Upload artifact
+      if: matrix.node-version == '20.x'
       uses: actions/upload-pages-artifact@v3
       with:
         path: './build'
