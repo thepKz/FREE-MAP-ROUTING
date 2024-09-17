@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './merged-build'
-          name: github-pages
+          name: github-pages-artifact
 
   deploy-production:
     needs: collect-artifacts
