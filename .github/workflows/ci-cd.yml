@@ -11,6 +11,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: "pages"
@@ -60,7 +61,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './merged-build'
-          name: github-pages-artifact
+          name: github-pages  # Đảm bảo tên này là "github-pages"
 
   deploy-production:
     needs: collect-artifacts
@@ -73,6 +74,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: List artifacts
+        run: |
+          echo "Available artifacts:"
+          artifacts=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --jq '.artifacts[].name')
+          echo "$artifacts"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
