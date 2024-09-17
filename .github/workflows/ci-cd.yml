@@ -26,7 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
@@ -42,10 +42,28 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: './build'
-        name: github-pages-artifact
+        name: github-pages-artifact-${{ matrix.node-version }}
+
+  collect-artifacts:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+      - name: Merge artifacts
+        run: |
+          mkdir -p ./merged-build
+          cp -R ./artifacts/*/* ./merged-build/
+      - name: Upload merged artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './merged-build'
+          name: github-pages-artifact
 
   deploy-production:
-    needs: test-and-build
+    needs: collect-artifacts
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
@@ -57,14 +75,12 @@ jobs:
         uses: actions/deploy-pages@v4
 
   deploy-staging:
-    needs: test-and-build
+    needs: collect-artifacts
     if: github.ref == 'refs/heads/staging'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: github-pages-artifact
           path: ./build
