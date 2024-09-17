@@ -37,6 +37,8 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const d = R * c; // Distance in km
   return d;
 }
+// Function to convert degrees to radians
+// This is necessary because trigonometric functions in JavaScript work with radians
 
 function deg2rad(deg) {
   return deg * (Math.PI / 180);

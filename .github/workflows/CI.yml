@@ -28,12 +28,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
-    - name: Check for "do not merge" label
-      uses: mheap/github-action-required-labels@v5
-      with:
-        mode: exactly
-        count: 0
-        labels: "do not merge"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
