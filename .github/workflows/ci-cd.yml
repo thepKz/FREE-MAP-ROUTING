@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: ["main", "staging"]
+    branches: ["main"]
   pull_request:
-    branches: ["main", "staging"]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -85,9 +85,19 @@ jobs:
           tar -xvf artifact.tar
           rm artifact.tar
       - name: List files in public folder
-        run: ls -R ./public
+        run: |
+          echo "Contents of ./public:"
+          ls -R ./public
       - name: Check index.html content
-        run: cat ./public/index.html
+        run: |
+          if [ -f "./public/index.html" ]; then
+            echo "Contents of index.html:"
+            cat ./public/index.html
+          else
+            echo "index.html not found in ./public"
+            echo "Contents of ./public:"
+            ls -R ./public
+          fi
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
