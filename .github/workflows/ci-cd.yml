@@ -74,22 +74,21 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: List artifacts
-        run: |
-          echo "Available artifacts:"
-          artifacts=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --jq '.artifacts[].name')
-          echo "$artifacts"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Download and check artifact
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: github-pages
           path: ./public
+      - name: Extract artifact
+        run: |
+          cd ./public
+          tar -xvf artifact.tar
+          rm artifact.tar
       - name: List files in public folder
         run: ls -R ./public
+      - name: Check index.html content
+        run: cat ./public/index.html
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
- 
