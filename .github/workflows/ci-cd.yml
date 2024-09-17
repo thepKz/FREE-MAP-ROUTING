@@ -41,7 +41,7 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: './build'
-        name: github-pages-${{ matrix.node-version }}
+        name: github-pages-artifact
 
   deploy-production:
     needs: test-and-build
@@ -65,7 +65,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: github-pages
+          name: github-pages-artifact
           path: ./build
       - name: Deploy to GitHub Pages (Staging)
         uses: peaceiris/actions-gh-pages@v3
