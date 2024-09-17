@@ -41,6 +41,7 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: './build'
+        name: github-pages-${{ matrix.node-version }}
 
   deploy-production:
     needs: test-and-build
